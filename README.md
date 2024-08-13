@@ -1,2 +1,3 @@
-# Memory-Card
-A simple fun memory card game
+# React + Vite
+
+A simple fun memory card game for passing time and training your mind
