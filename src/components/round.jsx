@@ -25,34 +25,35 @@ function shuffleObject(obj) {
   return Object.fromEntries(entries);
 }
 
-export default function Round({ players, moveOn }) {
-  const [lost, setLost] = useState(false);
+export default function Round({ players, moveOn, success, gameover }) {
   const [reborn, setReborn] = useState(players);
+
+  console.log(reborn);
 
   const picked = (chosenChamp) => {
     let champs = reborn;
     champs[chosenChamp] += 1;
-    if (Object.values(champs).some((value) => value > 1)) {
-      setLost(true);
-    }
-    if (Object.values(champs).every((value) => value === 1)) {
+
+    if (champs[chosenChamp] > 1) {
+      gameover();
+    } else if (Object.values(champs).every((value) => value === 1)) {
+      console.log("done");
       moveOn();
+    } else {
+      success();
     }
+
     champs = shuffleObject(champs);
     setReborn(champs);
   };
 
   return (
     <>
-      {lost ? (
-        <div>Hello, its either loading or you just lost</div>
-      ) : (
-        <div className="board">
-          {Object.keys(reborn).map((hero) => (
-            <Card champion={hero} chosen={picked} key={hero} />
-          ))}
-        </div>
-      )}
+      <div className="board">
+        {Object.keys(reborn).map((hero) => (
+          <Card champion={hero} chosen={picked} key={hero} />
+        ))}
+      </div>
     </>
   );
 }

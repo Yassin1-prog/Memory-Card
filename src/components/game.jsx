@@ -19,11 +19,13 @@ function pool(arr, num = 4) {
   return [arr, pickedElements];
 }
 
-export default function Game() {
+export default function Game({ again }) {
   const [loading, setLoading] = useState(true);
   const [champions, setChampions] = useState([]);
   const [players, setPlayers] = useState({});
   const [round, setRound] = useState(1);
+  const [score, setScore] = useState(0);
+  const [lost, setLost] = useState(false);
 
   useEffect(() => {
     async function fetchAllChampions() {
@@ -48,13 +50,17 @@ export default function Game() {
     let champs = Object.fromEntries(res[1].map((key) => [key, 0]));
     setChampions(res[0]);
     setPlayers(champs);
+    setScore(score + 1);
     setRound(round + 1);
   };
 
-  console.log(loading);
-  console.log(champions);
-  console.log(players);
-  console.log(round);
+  const nxtStep = () => {
+    setScore(score + 1);
+  };
+
+  const gameover = () => {
+    setLost(true);
+  };
 
   return (
     <>
@@ -62,7 +68,21 @@ export default function Game() {
         <div>Loading</div>
       ) : (
         <div className="summonerRift">
-          <Round players={players} moveOn={nxtLevel} key={round} />
+          <div>Score: {score}</div>
+          <Round
+            players={players}
+            moveOn={nxtLevel}
+            success={nxtStep}
+            gameover={gameover}
+            key={round}
+          />
+        </div>
+      )}
+      {lost && (
+        <div>
+          <div>You Lost</div>
+          <div>Score: {score}</div>
+          <button onClick={() => again(score)}>Restart</button>
         </div>
       )}
     </>
