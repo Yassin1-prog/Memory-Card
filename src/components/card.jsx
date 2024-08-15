@@ -1,7 +1,7 @@
 import "../styles/style.css";
 import { useState, useEffect } from "react";
 
-export default function Card({ champion }) {
+export default function Card({ champion, chosen }) {
   const [loading, setLoading] = useState(true);
   const [splash, setSplash] = useState("");
 
@@ -28,9 +28,9 @@ export default function Card({ champion }) {
       {loading ? (
         <div>Bye</div>
       ) : (
-        <button className="frame">
+        <button className="frame" onClick={() => chosen(champion)}>
           <div className="card">
-            <img src={splash} alt="result of an experiment" className="image" />
+            <img src={splash} alt="" className="image" />
             <div className="text">{champion}</div>
           </div>
         </button>

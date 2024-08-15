@@ -4,7 +4,9 @@ import Game from "./components/game.jsx";
 function App() {
   return (
     <>
-      <Game />
+      <div className="container">
+        <Game />
+      </div>
     </>
   );
 }
