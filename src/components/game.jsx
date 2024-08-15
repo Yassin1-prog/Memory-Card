@@ -1,6 +1,6 @@
 import "../styles/style.css";
 import { useState, useEffect } from "react";
-import Card from "./card.jsx";
+import Round from "./round.jsx";
 
 const CHAMPION_LIST_URL =
   "https://ddragon.leagueoflegends.com/cdn/13.14.1/data/en_US/champion.json";
@@ -16,37 +16,14 @@ function pool(arr, num = 4) {
     pickedElements.push(element);
   }
 
-  return pickedElements;
-}
-
-function shuffleObject(obj) {
-  const entries = Object.entries(obj);
-
-  // if there is a small amount of champions
-  if (entries.length < 9) {
-    const entries2 = entries.map((_, index) => {
-      const newIndex =
-        (index + Math.floor(entries.length / 2)) % entries.length;
-      return entries[newIndex];
-    });
-    return Object.fromEntries(entries2);
-  }
-  // Fisher-Yates shuffle algorithm
-  else {
-    for (let i = entries.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [entries[i], entries[j]] = [entries[j], entries[i]];
-    }
-  }
-
-  return Object.fromEntries(entries);
+  return [arr, pickedElements];
 }
 
 export default function Game() {
   const [loading, setLoading] = useState(true);
   const [champions, setChampions] = useState([]);
-  const [heroes, setHeroes] = useState({});
-  const [lost, setLost] = useState(false);
+  const [players, setPlayers] = useState({});
+  const [round, setRound] = useState(1);
 
   useEffect(() => {
     async function fetchAllChampions() {
@@ -55,32 +32,37 @@ export default function Game() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      const res = pool(Object.keys(data.data), 4);
-      let champs = Object.fromEntries(res.map((key) => [key, 0]));
-      setChampions(Object.keys(data.data));
+      const res = pool(Object.keys(data.data), round * 4);
+      let champs = Object.fromEntries(res[1].map((key) => [key, 0]));
+      setChampions(res[0]);
       setLoading(false);
-      setHeroes(champs);
+      setPlayers(champs);
+      setRound(round + 1);
     }
 
     fetchAllChampions();
   }, []);
 
-  const picked = (chosenChamp) => {
-    let champs = heroes;
-    champs[chosenChamp] == 1 ? setLost(true) : (champs[chosenChamp] += 1);
-    champs = shuffleObject(champs);
-    setHeroes(champs);
+  const nxtLevel = () => {
+    const res = pool(champions, round * 4);
+    let champs = Object.fromEntries(res[1].map((key) => [key, 0]));
+    setChampions(res[0]);
+    setPlayers(champs);
+    setRound(round + 1);
   };
+
+  console.log(loading);
+  console.log(champions);
+  console.log(players);
+  console.log(round);
 
   return (
     <>
-      {loading || lost ? (
-        <div>Hello, its either loading or you just lost</div>
+      {loading ? (
+        <div>Loading</div>
       ) : (
-        <div className="board">
-          {Object.keys(heroes).map((hero) => (
-            <Card champion={hero} chosen={picked} key={hero} />
-          ))}
+        <div className="summonerRift">
+          <Round players={players} moveOn={nxtLevel} key={round} />
         </div>
       )}
     </>
