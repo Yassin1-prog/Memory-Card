@@ -2,10 +2,84 @@ html,
 body {
   height: 100%;
   margin: 0;
+  padding: 0;
 }
 
 .container {
   display: grid;
   place-items: center;
   height: 100vh;
+  overflow: auto; /*allows me to scroll instead of content overflowing the background image*/
+  background-image: url("/runterra.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Optional: For a parallax effect */
+}
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: black;
+}
+
+.home {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.home:hover {
+  opacity: 80%;
+  font-size: 24px;
+}
+
+.score,
+.highscore {
+  font-family: "Potta One", system-ui;
+  font-size: 18px;
+  color: crimson;
+}
+
+.logo {
+  max-height: 150px;
+  max-width: 225px;
+  object-fit: cover;
+}
+
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: darkslategray solid;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+@media (max-width: 800px) {
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+  }
+
+  .logo,
+  .scoreboard {
+    margin: 5px;
+  }
+
+  .scoreboard {
+    padding: 5px;
+  }
+
+  .score,
+  .highscore {
+    font-family: "Potta One", system-ui;
+    font-size: 14px;
+    color: crimson;
+  }
 }

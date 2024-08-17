@@ -1,0 +1,103 @@
+body.active-modal {
+  overflow-y: hidden;
+}
+
+.winnermodal,
+.infomodal,
+.losermodal,
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(49, 49, 49, 0.8);
+}
+
+.winnermodal-content,
+.infomodal-content,
+.losermodal-content {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #f1f1f1;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 300px;
+}
+
+.infomodal-content {
+  font-family: "Potta One", system-ui;
+}
+
+.score1,
+.victory,
+.over,
+.score2 {
+  font-family: "Potta One", system-ui;
+  font-size: 20px;
+  color: crimson;
+  margin: 5px;
+}
+
+.victory,
+.score1 {
+  color: green;
+}
+
+.playagain,
+.restart {
+  padding: 8px 16px;
+  border: solid crimson;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.playagain {
+  border: solid green;
+}
+
+.playagain:hover,
+.restart:hover {
+  opacity: 80%;
+  font-size: 20px;
+}
+
+span {
+  color: gold;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.close:hover {
+  font-size: 22px;
+  color: crimson;
+}
+
+@media (max-width: 800px) {
+  .giph {
+    object-fit: contain;
+    max-height: 400px;
+    max-width: 250px;
+  }
+}

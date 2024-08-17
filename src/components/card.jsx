@@ -26,7 +26,7 @@ export default function Card({ champion, chosen }) {
   return (
     <>
       {loading ? (
-        <div>Bye</div>
+        <div>Loading...</div>
       ) : (
         <button className="frame" onClick={() => chosen(champion)}>
           <div className="card">
