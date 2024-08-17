@@ -49,7 +49,9 @@ export default function Game({ again, moveScore }) {
   }, []);
 
   const nxtLevel = () => {
-    if (champions.length == 0) {
+    if (champions.length == 20) {
+      setScore(score + 1);
+      moveScore(score + 1);
       setVictory(true);
     } else {
       const res = pool(champions, round * 4);

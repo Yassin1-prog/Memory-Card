@@ -17,6 +17,8 @@ function shuffleObject(obj) {
 export default function Round({ players, moveOn, success, gameover }) {
   const [reborn, setReborn] = useState(players);
 
+  console.log(reborn);
+
   const picked = (chosenChamp) => {
     let champs = reborn;
     champs[chosenChamp] += 1;

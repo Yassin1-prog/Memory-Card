@@ -21,6 +21,12 @@ export default function losermodal({ close }) {
             If you wish to reload the page/restart the game you could press the
             logo on the top left corner
           </p>
+          <p>
+            <FontAwesomeIcon icon={faEye} />
+            In total there are 164 champions, 144 are randomly chosen and
+            distributed along 8 rounds with ascending difficulity.
+            [4-8-12-16-20-24-28-32]
+          </p>
           <button onClick={close} className="close">
             <FontAwesomeIcon icon={faXmark} />
           </button>
